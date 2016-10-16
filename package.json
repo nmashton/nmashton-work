@@ -1,0 +1,13 @@
+{
+  "name": "nmashton.work",
+  "version": "0.1.0",
+  "description": "Source for @nmashton's portfolio site",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nmashton",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
