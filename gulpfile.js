@@ -6,6 +6,7 @@ var prettify = require('gulp-html-prettify');
 var pug = require('gulp-pug');
 var rename = require('gulp-rename');
 var tap = require('gulp-tap');
+var watch = require('gulp-watch');
 var fs = require('fs');
 var path = require('path');
 
@@ -20,6 +21,7 @@ gulp.task('connect', function () {
 
 gulp.task('pages', function () {
   gulp.src('./src/pages/*.md')
+    .pipe(watch('./src/pages/*.md'))
     .pipe(fm())
     .pipe(marked())
     .pipe(tap(function (file) {
