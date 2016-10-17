@@ -7,6 +7,7 @@ var prettify = require('gulp-html-prettify');
 var pug = require('gulp-pug');
 var rename = require('gulp-rename');
 var tap = require('gulp-tap');
+var gutil = require('gulp-util');
 var watch = require('gulp-watch');
 var fs = require('fs');
 var path = require('path');
@@ -36,7 +37,8 @@ gulp.task('pages', function () {
         }))
         .pipe(rename(path.basename(file.path).replace(/\.md$/, '.html')))
         .pipe(prettify({indent_size: 2}))
-        .pipe(gulp.dest(DIST));
+        .pipe(gulp.dest(DIST))
+        .on('end', function () {gutil.log(gutil.colors.cyan('Rebuilt pages'))});
     }));
 });
 
