@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var connect = require('gulp-connect');
 var fm = require('gulp-front-matter');
 var marked = require('gulp-marked');
+var prettify = require('gulp-html-prettify');
 var pug = require('gulp-pug');
 var rename = require('gulp-rename');
 var tap = require('gulp-tap');
@@ -31,6 +32,7 @@ gulp.task('pages', function () {
           locals: data
         }))
         .pipe(rename(path.basename(file.path).replace(/\.md$/, '.html')))
+        .pipe(prettify({indent_size: 2}))
         .pipe(gulp.dest(DIST));
     }));
 });
