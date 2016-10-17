@@ -4,6 +4,9 @@ html(lang="en")
     title= title
   body
     header
-      h1= title
-    main.
-      !{contents}
+      block header
+        h1= title
+    main
+      block content
+        .content.
+          !{contents}

@@ -7,7 +7,7 @@ var fs = require('fs');
 var pug = require('pug');
 
 var DIST = 'dist';
-var DEFAULT_TEMPLATE = 'templates/base.pug'
+var DEFAULT_TEMPLATE = 'templates/page.pug'
 
 gulp.task('connect', function () {
   connect.server({
@@ -20,11 +20,10 @@ gulp.task('pages', function () {
     .pipe(fm())
     .pipe(marked())
     .pipe(tap(function (file) {
-      var templateFile = file.frontMatter.template || DEFAULT_TEMPLATE;
-      var template = pug.compile(fs.readFileSync(templateFile).toString());
       var contents = file.contents.toString();
       var data = Object.assign({}, file.frontMatter, {contents: contents});
-      file.contents = new Buffer(template(data), 'utf-8');
+      var rendered = pug.renderFile(file.frontMatter.template || DEFAULT_TEMPLATE, data)
+      file.contents = new Buffer(rendered, 'utf-8');
     }))
     .pipe(gulp.dest(DIST));
 });
