@@ -6,6 +6,7 @@ var marked = require('gulp-marked');
 var prettify = require('gulp-html-prettify');
 var pug = require('gulp-pug');
 var rename = require('gulp-rename');
+var stylus = require('gulp-stylus');
 var tap = require('gulp-tap');
 var gutil = require('gulp-util');
 var watch = require('gulp-watch');
@@ -13,6 +14,7 @@ var fs = require('fs');
 var path = require('path');
 
 var DIST = 'dist';
+var CSS_DIST = path.join(DIST, 'css');
 var DEFAULT_TEMPLATE = 'templates/page.pug'
 
 gulp.task('connect', function () {
@@ -48,4 +50,13 @@ gulp.task('templates', function () {
     }));
 });
 
-gulp.task('default', ['pages', 'templates', 'connect']);
+gulp.task('stylus', function () {
+  gulp.src('./static/stylus/index.styl')
+    .pipe(watch('./static/stylus/**/*.styl'))
+    .pipe(stylus())
+    .pipe(rename('bundle.css'))
+    .pipe(gulp.dest(CSS_DIST))
+    .on('end', function () {gutil.log(gutil.colors.cyan('Rebuilt CSS'))});
+})
+
+gulp.task('default', ['pages', 'templates', 'stylus', 'connect']);
