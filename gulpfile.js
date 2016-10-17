@@ -6,6 +6,7 @@ var marked = require('gulp-marked');
 var prettify = require('gulp-html-prettify');
 var pug = require('gulp-pug');
 var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
 var stylus = require('gulp-stylus');
 var tap = require('gulp-tap');
 var gutil = require('gulp-util');
@@ -53,8 +54,10 @@ gulp.task('templates', function () {
 gulp.task('stylus', function () {
   gulp.src('./static/stylus/index.styl')
     .pipe(watch('./static/stylus/**/*.styl'))
+    .pipe(sourcemaps.init())
     .pipe(stylus())
     .pipe(rename('bundle.css'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(CSS_DIST))
     .on('end', function () {gutil.log(gutil.colors.cyan('Rebuilt CSS'))});
 })
