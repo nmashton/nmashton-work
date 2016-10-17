@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var batch = require('gulp-batch');
 var connect = require('gulp-connect');
 var fm = require('gulp-front-matter');
 var marked = require('gulp-marked');
@@ -39,4 +40,10 @@ gulp.task('pages', function () {
     }));
 });
 
-gulp.task('default', ['pages', 'connect']);
+gulp.task('templates', function () {
+    watch('templates/**/*.pug', batch(function (events, done) {
+        gulp.start('pages', done);
+    }));
+});
+
+gulp.task('default', ['pages', 'templates', 'connect']);
